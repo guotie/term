@@ -8,6 +8,8 @@ golang terminal
 
 ## create & start terminal
 
+	ch := make(chan struct{})
+	wg := sync.WaitGroup{}
     term.StartTermServer(9988)
 	go term.TermRoutine(ch, &wg)
 	
