@@ -263,10 +263,10 @@ func parseInput(conn *net.TCPConn) (cmd string, err error) {
 
 			default:
 				// 左右键不处理
-				fmt.Println(ch)
+				//fmt.Println(ch)
 				continue
 			}
-			fmt.Println(cmd, ccmd)
+			//fmt.Println(cmd, ccmd)
 			repeat = true
 			//光标退到开始位置
 			if len(cmd) > 0 {
@@ -336,7 +336,7 @@ func getHistoryCmd(key byte) string {
 	} else {
 		return ""
 	}
-	fmt.Printf("index: %d used: %d %s\n", history.index, history.used, history.cmds[history.index])
+	//fmt.Printf("index: %d used: %d %s\n", history.index, history.used, history.cmds[history.index])
 	return history.cmds[history.index]
 }
 
