@@ -349,7 +349,7 @@ func getHistoryCmd(key byte) string {
 	} else {
 		return ""
 	}
-	printHistoryCmd()
+	//printHistoryCmd()
 	//fmt.Printf("index: %d used: %d %s\n", history.index, history.used, history.cmds[history.index])
 	return history.cmds[history.index]
 }
