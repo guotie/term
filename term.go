@@ -44,9 +44,10 @@ const (
 )
 
 type cmdHistory struct {
-	cmds  [MaxHistroyCmds]string
-	index int
-	used  int
+	cmds   [MaxHistroyCmds]string
+	index  int
+	used   int
+	pindex int
 }
 
 // 处理console命令的函数
@@ -300,6 +301,10 @@ func parseInput(conn *net.TCPConn) (cmd string, err error) {
 out:
 	if repeat == false {
 		setHistoryCmd(cmd)
+	} else {
+		if history.used > 0 {
+			history.index = history.pindex
+		}
 	}
 	return
 }
@@ -318,7 +323,15 @@ func setHistoryCmd(cmd string) {
 
 	history.cmds[history.index] = cmd
 	history.index++
+	history.pindex = history.index
 	history.used++
+}
+
+// 调试函数，打印history command
+func printHistoryCmd() {
+	fmt.Printf("History index: %d pindex: %d used: %d\n",
+		history.index, history.pindex, history.used)
+	fmt.Printf("commands: %v\n", history.cmds[0:MaxHistroyCmds])
 }
 
 // 获取历史命令
@@ -336,6 +349,7 @@ func getHistoryCmd(key byte) string {
 	} else {
 		return ""
 	}
+	printHistoryCmd()
 	//fmt.Printf("index: %d used: %d %s\n", history.index, history.used, history.cmds[history.index])
 	return history.cmds[history.index]
 }
