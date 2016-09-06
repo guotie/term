@@ -251,6 +251,7 @@ func parseInput(conn *net.TCPConn) (cmd string, err error) {
 			ch2 = buf[buflen]
 			buflen++
 			if ch2 != TELKEYBOARD {
+				glog.Warn("invalid TELANSI_ESC: 0x%x\n", ch2)
 				continue
 			}
 			conn.Read(buf[buflen : buflen+1])
@@ -276,6 +277,7 @@ func parseInput(conn *net.TCPConn) (cmd string, err error) {
 			// 回显
 			cmd = ccmd
 			conn.Write([]byte(cmd))
+			buflen = len(cmd)
 		case CR:
 			fallthrough
 		case LF:
