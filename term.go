@@ -288,6 +288,7 @@ func parseInput(conn *net.TCPConn) (cmd string, err error) {
 				backspace(conn, 1)
 				cmd = cmd[0 : len(cmd)-1]
 				buflen--
+				repeat = false
 			}
 			continue
 		case TELCODE_TAB:
@@ -296,6 +297,7 @@ func parseInput(conn *net.TCPConn) (cmd string, err error) {
 			//fmt.Println(ch, string(ch))
 			cmd += string(ch)
 			conn.Write([]byte{ch})
+			repeat = false
 		}
 
 		buflen++
